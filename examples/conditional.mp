@@ -1,0 +1,12 @@
+PROGRAM conditional;
+
+VAR c: INTEGER;
+BEGIN
+	c := 1;
+	IF c THEN BEGIN
+		WRITE(42);
+    END
+	ELSE
+		WRITE(1180);
+END.
+
