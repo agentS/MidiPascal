@@ -16,5 +16,6 @@ public enum MidiPascalSimpleSymbol implements MidiPascalSymbol
 	COMMA,
 	COLON,
 	EQUALS,
-	CHARACTER;
+	CHARACTER,
+	QUOTE;
 }

@@ -1,10 +1,13 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.NodeInfo;
 
+@NodeInfo(shortName = "symbol", description = "Node implementing a symbol like a variable assignment")
 public class MidiPascalSymbolNode extends MidiPascalExpressionNode
 {
 	private final String name;
+	private int result;
 
 	public MidiPascalSymbolNode(final String name)
 	{
@@ -25,6 +28,24 @@ public class MidiPascalSymbolNode extends MidiPascalExpressionNode
 	public String toString()
 	{
 		return "'" + this.name + "'";
+	}
+
+	@Override
+	public Object getResult()
+	{
+		return this.getIntegerResult();
+	}
+
+	@Override
+	public String getStringResult()
+	{
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int getIntegerResult()
+	{
+		return this.result;
 	}
 
 	@Override

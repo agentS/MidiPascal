@@ -1,5 +1,8 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
+import com.oracle.truffle.api.nodes.NodeInfo;
+
+@NodeInfo(shortName = "/", description = "Node implementing an integer division")
 public class MidiPascalDivisionNode extends MidiPascalArithmeticNode
 {
 	public MidiPascalDivisionNode
@@ -14,6 +17,6 @@ public class MidiPascalDivisionNode extends MidiPascalArithmeticNode
 	@Override
 	void performCalculation()
 	{
-		this.result = (this.leftHandSide.getResult() / this.rightHandSide.getResult());
+		this.result = (this.leftHandSide.getIntegerResult() / this.rightHandSide.getIntegerResult());
 	}
 }

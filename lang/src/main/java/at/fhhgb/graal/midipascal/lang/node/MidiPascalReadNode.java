@@ -1,7 +1,9 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.NodeInfo;
 
+@NodeInfo(shortName = "read", description = "Node reading an integer value from the console")
 public class MidiPascalReadNode extends MidiPascalStatementNode
 {
 	private final MidiPascalSymbolNode target;

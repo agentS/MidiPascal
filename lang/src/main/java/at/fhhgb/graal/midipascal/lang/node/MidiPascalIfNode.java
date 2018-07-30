@@ -1,7 +1,9 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.NodeInfo;
 
+@NodeInfo(shortName = "if", description = "The node implementing a conditional statement")
 public class MidiPascalIfNode extends MidiPascalStatementNode
 {
 	private final MidiPascalExpressionNode condition;
@@ -35,7 +37,7 @@ public class MidiPascalIfNode extends MidiPascalStatementNode
 	public void execute(VirtualFrame frame)
 	{
 		this.condition.execute(frame);
-		if (this.condition.getResult() > 0)
+		if (this.condition.getIntegerResult() > 0)
 		{
 			this.thenNode.execute(frame);
 		}

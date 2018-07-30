@@ -4,10 +4,12 @@ import com.oracle.truffle.api.CompilerAsserts;
 import com.oracle.truffle.api.TruffleLanguage;
 import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import com.oracle.truffle.api.nodes.RootNode;
 
 import java.util.List;
 
+@NodeInfo(shortName = "root", description = "Root node containing references to all other nodes to execute")
 public class MidiPascalRootNode extends RootNode
 {
 	@Children

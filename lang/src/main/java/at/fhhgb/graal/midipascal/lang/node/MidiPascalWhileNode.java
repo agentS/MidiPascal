@@ -1,7 +1,9 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.NodeInfo;
 
+@NodeInfo(shortName = "while", description = "The node implementing the while loop")
 public class MidiPascalWhileNode extends MidiPascalStatementNode
 {
 	private final MidiPascalExpressionNode condition;
@@ -22,7 +24,7 @@ public class MidiPascalWhileNode extends MidiPascalStatementNode
 	public void execute(VirtualFrame frame)
 	{
 		this.condition.execute(frame);
-		while (this.condition.getResult() > 0)
+		while (this.condition.getIntegerResult() > 0)
 		{
 			this.body.execute(frame);
 			this.condition.execute(frame);

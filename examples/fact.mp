@@ -1,10 +1,14 @@
 PROGRAM fact;
 
 VAR f, n: INTEGER;
+VAR original: INTEGER;
 VAR literal: INTEGER;
 
 BEGIN
+	WRITE('Please enter a number:');
 	READ(n);
+	original := n;
+
 	IF n THEN BEGIN
 		f := n;
 		n := n - 1;
@@ -19,5 +23,6 @@ BEGIN
 
 	literal := 1180;
 
-	WRITE(f);
+	WRITE('The factorial of ' + original + ' is: ' + f);
 END.
+

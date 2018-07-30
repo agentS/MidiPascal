@@ -3,12 +3,12 @@ package at.fhhgb.graal.midipascal.lang.node;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
-@NodeInfo(shortName = "integer", description = "Node for storing an integer value")
-public class MidiPascalIntegerNode extends MidiPascalExpressionNode
+@NodeInfo(shortName = "string", description = "Node for storing a string value")
+public class MidiPascalStringNode extends MidiPascalExpressionNode
 {
-	private int value;
+	private String value;
 
-	public MidiPascalIntegerNode(int value)
+	public MidiPascalStringNode(String value)
 	{
 		this.value = value;
 	}
@@ -16,19 +16,19 @@ public class MidiPascalIntegerNode extends MidiPascalExpressionNode
 	@Override
 	public Object getResult()
 	{
-		return this.getIntegerResult();
+		return this.getStringResult();
 	}
 
 	@Override
 	public String getStringResult()
 	{
-		throw new UnsupportedOperationException();
+		return this.value;
 	}
 
 	@Override
 	public int getIntegerResult()
 	{
-		return this.value;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

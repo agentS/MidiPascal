@@ -1,0 +1,31 @@
+MidiPascal :=
+	'PROGRAM' Identifier ';'
+	[VariableDeclaration]
+	'BEGIN'
+		StatementSequence
+	'END''.'
+
+VariableDeclaration := 'VAR'
+	IdentifierList ':' 'INTEGER' ';'
+
+IdentifierList := Identifier [',' IdentifierList]
+
+StatementSequence := Statement [';' StatementSequence]
+
+Statement :=
+	Identifier ':=' Expression
+	| 'READ' '(' Identifier ')'
+	| 'WRITE' '(' Expression ')'
+	| 'IF' Identifier 'THEN' Statement ['ELSE' Statement]
+	| 'WHILE' Identifier 'DO' Statement
+	| 'BEGIN' StatementSequence 'END'
+
+Expression := Term [('+' | '-') Term]
+Term := Factor [('*' | '/') Factor]
+Factor :=
+	Identifier
+	| number
+	| string
+	| '(' Expression ')'
+
+Identifier := variableName

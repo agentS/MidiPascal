@@ -1,5 +1,8 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
+import com.oracle.truffle.api.nodes.NodeInfo;
+
+@NodeInfo(shortName = "+", description = "The node performing the addition between two integers")
 public class MidiPascalAdditionNode extends MidiPascalArithmeticNode
 {
 	public MidiPascalAdditionNode
@@ -14,6 +17,6 @@ public class MidiPascalAdditionNode extends MidiPascalArithmeticNode
 	@Override
 	void performCalculation()
 	{
-		this.result = (this.leftHandSide.getResult() + this.rightHandSide.getResult());
+		this.result = (this.leftHandSide.getIntegerResult() + this.rightHandSide.getIntegerResult());
 	}
 }

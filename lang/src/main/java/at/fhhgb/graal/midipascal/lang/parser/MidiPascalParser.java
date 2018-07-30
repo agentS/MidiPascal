@@ -53,10 +53,10 @@ public final class MidiPascalParser
 		this.tokenIndex = 0;
 		this.currentToken = this.tokens.get(this.tokenIndex);
 
-		return this.miniPascal();
+		return this.midiPascal();
 	}
 
-	private List<MidiPascalStatementNode> miniPascal() throws MidiPascalSyntaxException
+	private List<MidiPascalStatementNode> midiPascal() throws MidiPascalSyntaxException
 	{
 		if (this.currentToken == MidiPascalKeywordSymbol.PROGRAM)
 		{
@@ -179,14 +179,18 @@ public final class MidiPascalParser
 
 	private List<MidiPascalStatementNode> statementSequence(List<MidiPascalStatementNode> statements) throws MidiPascalSyntaxException
 	{
-		MidiPascalStatementNode addedStatement = this.statement();
-		statements.add(addedStatement);
-
-		if (this.currentToken == MidiPascalSimpleSymbol.SEMICOLON)
+		if (this.currentToken != MidiPascalKeywordSymbol.END)
 		{
-			this.moveToNextSymbol();
-			this.statementSequence(statements);
+			MidiPascalStatementNode addedStatement = this.statement();
+			statements.add(addedStatement);
+
+			if (this.currentToken == MidiPascalSimpleSymbol.SEMICOLON)
+			{
+				this.moveToNextSymbol();
+				this.statementSequence(statements);
+			}
 		}
+
 		return statements;
 	}
 
@@ -376,7 +380,15 @@ public final class MidiPascalParser
 		{
 			this.moveToNextSymbol();
 			MidiPascalExpressionNode rightHandSide = this.expression();
-			result = new MidiPascalAdditionNode(leftHandSide, rightHandSide);
+
+			if ((isStringNode(leftHandSide)) || (isStringNode(rightHandSide)))
+			{
+				result = new MidiPascalStringConcatenationNode(leftHandSide, rightHandSide);
+			}
+			else
+			{
+				result = new MidiPascalAdditionNode(leftHandSide, rightHandSide);
+			}
 		}
 		else if (this.currentToken == MidiPascalSimpleSymbol.MINUS)
 		{
@@ -430,6 +442,11 @@ public final class MidiPascalParser
 			result = this.symbols.get(variableName);
 			this.moveToNextSymbol();
 		}
+		else if (this.currentToken instanceof MidiPascalStringSymbol)
+		{
+			result = new MidiPascalStringNode(this.currentToken.toString());
+			this.moveToNextSymbol();
+		}
 		else if (this.currentToken == MidiPascalSimpleSymbol.OPEN_PARENTHESIS)
 		{
 			this.moveToNextSymbol();
@@ -450,5 +467,10 @@ public final class MidiPascalParser
 	{
 		++this.tokenIndex;
 		this.currentToken = this.tokens.get(this.tokenIndex);
+	}
+
+	private static boolean isStringNode(MidiPascalExpressionNode examined)
+	{
+		return ((examined instanceof MidiPascalStringNode) || (examined instanceof MidiPascalStringConcatenationNode));
 	}
 }

@@ -1,14 +1,12 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
-import com.oracle.truffle.api.nodes.NodeInfo;
 
-@NodeInfo(shortName = "arithmetic operation", description = "The abstract node for every arithmetic operation between two integers")
-public abstract class MidiPascalArithmeticNode extends MidiPascalBinaryNode
+public class MidiPascalStringConcatenationNode extends MidiPascalBinaryNode
 {
-	protected int result;
+	protected String result;
 
-	MidiPascalArithmeticNode
+	public MidiPascalStringConcatenationNode
 	(
 			final MidiPascalExpressionNode leftHandSide,
 			final MidiPascalExpressionNode rightHandSide
@@ -20,19 +18,19 @@ public abstract class MidiPascalArithmeticNode extends MidiPascalBinaryNode
 	@Override
 	public Object getResult()
 	{
-		return this.getIntegerResult();
+		return this.getStringResult();
 	}
 
 	@Override
 	public String getStringResult()
 	{
-		throw new UnsupportedOperationException();
+		return this.result;
 	}
 
 	@Override
 	public int getIntegerResult()
 	{
-		return this.result;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -40,8 +38,10 @@ public abstract class MidiPascalArithmeticNode extends MidiPascalBinaryNode
 	{
 		this.leftHandSide.execute(frame);
 		this.rightHandSide.execute(frame);
-		this.performCalculation();
+		this.result =
+		(
+				this.leftHandSide.getResult().toString()
+				+ this.rightHandSide.getResult().toString()
+		);
 	}
-
-	abstract void performCalculation();
 }

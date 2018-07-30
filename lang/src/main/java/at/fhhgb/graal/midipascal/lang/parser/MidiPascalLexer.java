@@ -41,24 +41,45 @@ public class MidiPascalLexer
 						{
 							builtComplexSymbol = new MidiPascalTextSymbol(line.charAt(i));
 						}
-
-						++i;
-						nextSymbol = this.getNextSymbol(line.charAt(i));
-						while
-						(
-								(i < line.length())
-								&& isPartOfComplexSymbol(nextSymbol)
-						)
+						else if (nextSymbol == MidiPascalSimpleSymbol.QUOTE)
 						{
-							nextSymbol = this.getNextSymbol(line.charAt(i));
-							if (isPartOfComplexSymbol(nextSymbol))
+							builtComplexSymbol = new MidiPascalStringSymbol();
+						}
+						++i;
+
+						if (builtComplexSymbol instanceof MidiPascalStringSymbol)
+						{
+							char nextCharacter = line.charAt(i);
+							while
+							(
+									(i < line.length())
+									&& (nextCharacter != '\'')
+							)
 							{
-								builtComplexSymbol.append(line.charAt(i));
+								builtComplexSymbol.append(nextCharacter);
 								++i;
+								nextCharacter = line.charAt(i);
 							}
 						}
+						else
+						{
+							nextSymbol = this.getNextSymbol(line.charAt(i));
+							while
+							(
+									(i < line.length())
+									&& isPartOfComplexSymbol(nextSymbol)
+							)
+							{
+								nextSymbol = this.getNextSymbol(line.charAt(i));
+								if (isPartOfComplexSymbol(nextSymbol))
+								{
+									builtComplexSymbol.append(line.charAt(i));
+									++i;
+								}
+							}
+							--i;
+						}
 
-						--i;
 						MidiPascalKeywordSymbol keyword = getKeywordSymbol(builtComplexSymbol);
 						if (keyword != null)
 						{
@@ -123,6 +144,8 @@ public class MidiPascalLexer
 				return MidiPascalSimpleSymbol.BLANK;
 			case ' ':
 				return MidiPascalSimpleSymbol.BLANK;
+			case '\'':
+				return MidiPascalSimpleSymbol.QUOTE;
 			default:
 				if ((examined >= '0') && (examined <= '9'))
 				{
@@ -146,6 +169,7 @@ public class MidiPascalLexer
 		(
 				(examined == MidiPascalSimpleSymbol.DIGIT)
 				|| (examined == MidiPascalSimpleSymbol.CHARACTER)
+				|| (examined == MidiPascalSimpleSymbol.QUOTE)
 		);
 	}
 

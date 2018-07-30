@@ -1,11 +1,13 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.NodeInfo;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@NodeInfo(shortName = "block", description = "Node implementing a block of statements")
 public class MidiPascalBlockNode extends MidiPascalStatementNode
 {
 	@Children
