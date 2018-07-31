@@ -35,3 +35,4 @@ public class MidiPascalFromJava
 		System.out.println("Hello from Java.");
 	}
 }
+

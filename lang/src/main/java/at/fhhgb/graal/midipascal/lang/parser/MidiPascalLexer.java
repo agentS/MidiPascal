@@ -204,6 +204,8 @@ public class MidiPascalLexer
 					return MidiPascalKeywordSymbol.DO;
 				case "INTEGER":
 					return MidiPascalKeywordSymbol.INTEGER_DATA_TYPE;
+				case "POLYGLOT":
+					return MidiPascalKeywordSymbol.POLYGLOT;
 			}
 		}
 		return null;

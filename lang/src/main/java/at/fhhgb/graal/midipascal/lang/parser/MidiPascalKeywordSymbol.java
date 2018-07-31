@@ -13,5 +13,6 @@ public enum MidiPascalKeywordSymbol implements MidiPascalSymbol
 	ELSE,
 	WHILE,
 	DO,
-	INTEGER_DATA_TYPE;
+	INTEGER_DATA_TYPE,
+	POLYGLOT;
 }

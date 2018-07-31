@@ -215,12 +215,12 @@ public final class MidiPascalParser
 				}
 				else
 				{
-					throw new MidiPascalSyntaxException("Assignment operator expected after variable name");
+					throw new MidiPascalSyntaxException("Assignment operator expected after a variable name");
 				}
 			}
 			else
 			{
-				throw new MidiPascalSyntaxException("Assignment operator expected after variable name");
+				throw new MidiPascalSyntaxException("Assignment operator expected after a variable name");
 			}
 		}
 		else if (this.currentToken == MidiPascalKeywordSymbol.READ)
@@ -285,7 +285,7 @@ public final class MidiPascalParser
 			}
 			else
 			{
-				throw new MidiPascalSyntaxException("'(' expected after WRITE command");
+				throw new MidiPascalSyntaxException("'(' expected after the WRITE command");
 			}
 		}
 		else if (this.currentToken == MidiPascalKeywordSymbol.IF)
@@ -362,6 +362,49 @@ public final class MidiPascalParser
 			else
 			{
 				throw new MidiPascalSyntaxException("END expected at the end of a block");
+			}
+		}
+		else if (this.currentToken == MidiPascalKeywordSymbol.POLYGLOT)
+		{
+			this.moveToNextSymbol();
+			if (this.currentToken == MidiPascalSimpleSymbol.OPEN_PARENTHESIS)
+			{
+				this.moveToNextSymbol();
+				if (this.currentToken instanceof MidiPascalStringSymbol)
+				{
+					String targetLanguage = this.currentToken.toString();
+					this.moveToNextSymbol();
+
+					if (this.currentToken == MidiPascalSimpleSymbol.COMMA)
+					{
+						this.moveToNextSymbol();
+
+						MidiPascalExpressionNode parameter = this.expression();
+						result = new MidiPascalPolyglotNode(targetLanguage, parameter);
+
+						if (this.currentToken == MidiPascalSimpleSymbol.CLOSING_PARENTHESIS)
+						{
+							this.moveToNextSymbol();
+						}
+						else
+						{
+							System.out.println(this.currentToken);
+							throw new MidiPascalSyntaxException("')' expected after the POLYGLOT command's parameter");
+						}
+					}
+					else
+					{
+						throw new MidiPascalSyntaxException("',' expected between the two parameters of the POLYGLOT command");
+					}
+				}
+				else
+				{
+					throw new MidiPascalSyntaxException("String parameter with the target language expected as the POLYGLOT command's first parameter");
+				}
+			}
+			else
+			{
+				throw new MidiPascalSyntaxException("'(' expected after the POLYGLOT command");
 			}
 		}
 		else
