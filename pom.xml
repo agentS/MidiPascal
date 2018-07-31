@@ -11,6 +11,7 @@
     <modules>
         <module>lang</module>
         <module>launcher</module>
+        <module>component</module>
     </modules>
 
     <properties>
