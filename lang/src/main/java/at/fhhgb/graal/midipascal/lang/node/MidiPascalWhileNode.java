@@ -24,7 +24,7 @@ public class MidiPascalWhileNode extends MidiPascalStatementNode
 	public void execute(VirtualFrame frame)
 	{
 		this.condition.execute(frame);
-		while (this.condition.getIntegerResult() > 0)
+		while (this.condition.getIntegerResult() != 0)
 		{
 			this.body.execute(frame);
 			this.condition.execute(frame);
