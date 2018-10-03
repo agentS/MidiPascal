@@ -10,6 +10,7 @@ BEGIN
 
 	WRITE(0);
 	WRITE(1);
+	upperBoundary := upperBoundary - 1;
 	WHILE upperBoundary DO BEGIN
 		WRITE(current);
 		next := current + previous;

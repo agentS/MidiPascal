@@ -1,11 +1,14 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
+import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 @NodeInfo(shortName = "string", description = "Node for storing a string value")
 public class MidiPascalStringNode extends MidiPascalExpressionNode
 {
+	@Child
+	@CompilerDirectives.CompilationFinal
 	private String value;
 
 	public MidiPascalStringNode(String value)

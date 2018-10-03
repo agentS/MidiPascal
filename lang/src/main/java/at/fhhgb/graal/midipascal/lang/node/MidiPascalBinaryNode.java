@@ -1,5 +1,6 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
+import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.dsl.NodeChild;
 import com.oracle.truffle.api.dsl.NodeChildren;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -8,8 +9,13 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 @NodeChildren({@NodeChild("leftHandSide"), @NodeChild("rightHandSide")})
 abstract class MidiPascalBinaryNode extends MidiPascalExpressionNode
 {
-	protected final MidiPascalExpressionNode leftHandSide;
-	protected final MidiPascalExpressionNode rightHandSide;
+	@Child
+	@CompilerDirectives.CompilationFinal
+	protected MidiPascalExpressionNode leftHandSide;
+
+	@Child
+	@CompilerDirectives.CompilationFinal
+	protected MidiPascalExpressionNode rightHandSide;
 
 	MidiPascalBinaryNode
 	(

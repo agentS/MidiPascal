@@ -1,9 +1,11 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
+import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 @NodeInfo(shortName = "symbol", description = "Node implementing a symbol like a variable assignment")
+@CompilerDirectives.ValueType
 public class MidiPascalSymbolNode extends MidiPascalExpressionNode
 {
 	private final String name;

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.0.0-rc4"
+VERSION="1.0.0-rc6"
 LANGUAGEVERSION="0.0"
 
 MAIN_CLASS="at.fhhgb.graal.midipascal.launcher.MidiPascalLauncher"

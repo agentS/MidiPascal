@@ -1,5 +1,6 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
+import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
@@ -16,7 +17,13 @@ public class MidiPascalReadNode extends MidiPascalStatementNode
 	@Override
 	public void execute(VirtualFrame frame)
 	{
-		String input = System.console().readLine();
+		String input = this.readFromConsole();
 		this.target.setResult(Integer.parseInt(input));
+	}
+
+	@CompilerDirectives.TruffleBoundary
+	private String readFromConsole()
+	{
+		return System.console().readLine();
 	}
 }
