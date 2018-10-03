@@ -7,7 +7,6 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 @NodeInfo(shortName = "string", description = "Node for storing a string value")
 public class MidiPascalStringNode extends MidiPascalExpressionNode
 {
-	@Child
 	@CompilerDirectives.CompilationFinal
 	private String value;
 
@@ -17,19 +16,19 @@ public class MidiPascalStringNode extends MidiPascalExpressionNode
 	}
 
 	@Override
-	public Object getResult()
+	public Object getResult(VirtualFrame frame)
 	{
-		return this.getStringResult();
+		return this.getStringResult(frame);
 	}
 
 	@Override
-	public String getStringResult()
+	public String getStringResult(VirtualFrame frame)
 	{
 		return this.value;
 	}
 
 	@Override
-	public int getIntegerResult()
+	public int getIntegerResult(VirtualFrame frame)
 	{
 		throw new UnsupportedOperationException();
 	}

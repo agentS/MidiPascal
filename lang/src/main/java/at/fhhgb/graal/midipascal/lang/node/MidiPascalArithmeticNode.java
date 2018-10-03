@@ -18,19 +18,19 @@ public abstract class MidiPascalArithmeticNode extends MidiPascalBinaryNode
 	}
 
 	@Override
-	public Object getResult()
+	public Object getResult(VirtualFrame frame)
 	{
-		return this.getIntegerResult();
+		return this.getIntegerResult(frame);
 	}
 
 	@Override
-	public String getStringResult()
+	public String getStringResult(VirtualFrame frame)
 	{
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public int getIntegerResult()
+	public int getIntegerResult(VirtualFrame frame)
 	{
 		return this.result;
 	}
@@ -40,8 +40,8 @@ public abstract class MidiPascalArithmeticNode extends MidiPascalBinaryNode
 	{
 		this.leftHandSide.execute(frame);
 		this.rightHandSide.execute(frame);
-		this.performCalculation();
+		this.performCalculation(frame);
 	}
 
-	abstract void performCalculation();
+	abstract void performCalculation(VirtualFrame frame);
 }

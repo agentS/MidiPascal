@@ -51,7 +51,7 @@ public class MidiPascalWhileNode extends MidiPascalStatementNode
 		public boolean executeRepeating(VirtualFrame frame)
 		{
 			this.condition.execute(frame);
-			if (this.condition.getIntegerResult() != 0)
+			if (this.condition.getIntegerResult(frame) != 0)
 			{
 				this.body.execute(frame);
 				return true;

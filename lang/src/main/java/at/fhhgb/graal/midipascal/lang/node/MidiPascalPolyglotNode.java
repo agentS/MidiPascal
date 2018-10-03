@@ -19,6 +19,6 @@ public class MidiPascalPolyglotNode extends MidiPascalStatementNode
 	{
 		this.parameter.execute(frame);
 		Context polyglot = Context.create();
-		polyglot.eval(this.targetLanguage, this.parameter.getStringResult());
+		polyglot.eval(this.targetLanguage, this.parameter.getStringResult(frame));
 	}
 }

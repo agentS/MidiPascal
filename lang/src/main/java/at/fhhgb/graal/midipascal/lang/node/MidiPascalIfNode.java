@@ -37,7 +37,7 @@ public class MidiPascalIfNode extends MidiPascalStatementNode
 	public void execute(VirtualFrame frame)
 	{
 		this.condition.execute(frame);
-		if (this.condition.getIntegerResult() != 0)
+		if (this.condition.getIntegerResult(frame) != 0)
 		{
 			this.thenNode.execute(frame);
 		}

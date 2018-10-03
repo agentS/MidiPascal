@@ -16,12 +16,11 @@ public class MidiPascalWriteNode extends MidiPascalUnaryStatement
 	public void execute(VirtualFrame frame)
 	{
 		this.parameter.execute(frame);
-		this.print();
+		this.print(frame);
 	}
 
-	@CompilerDirectives.TruffleBoundary
-	private void print()
+	private void print(VirtualFrame frame)
 	{
-		System.out.println(this.parameter.getResult());
+		System.out.println(this.parameter.getResult(frame));
 	}
 }

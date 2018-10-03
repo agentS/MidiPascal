@@ -16,19 +16,19 @@ public class MidiPascalStringConcatenationNode extends MidiPascalBinaryNode
 	}
 
 	@Override
-	public Object getResult()
+	public Object getResult(VirtualFrame frame)
 	{
-		return this.getStringResult();
+		return this.getStringResult(frame);
 	}
 
 	@Override
-	public String getStringResult()
+	public String getStringResult(VirtualFrame frame)
 	{
 		return this.result;
 	}
 
 	@Override
-	public int getIntegerResult()
+	public int getIntegerResult(VirtualFrame frame)
 	{
 		throw new UnsupportedOperationException();
 	}
@@ -40,8 +40,8 @@ public class MidiPascalStringConcatenationNode extends MidiPascalBinaryNode
 		this.rightHandSide.execute(frame);
 		this.result =
 		(
-				this.leftHandSide.getResult().toString()
-				+ this.rightHandSide.getResult().toString()
+				this.leftHandSide.getResult(frame).toString()
+				+ this.rightHandSide.getResult(frame).toString()
 		);
 	}
 }

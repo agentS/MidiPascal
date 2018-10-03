@@ -3,6 +3,8 @@ package at.fhhgb.graal.midipascal.lang.parser;
 import at.fhhgb.graal.midipascal.lang.MidiPascalLanguage;
 import at.fhhgb.graal.midipascal.lang.node.*;
 import com.oracle.truffle.api.frame.FrameDescriptor;
+import com.oracle.truffle.api.frame.FrameSlot;
+import com.oracle.truffle.api.frame.FrameSlotKind;
 import com.oracle.truffle.api.source.Source;
 
 import java.io.BufferedReader;
@@ -20,6 +22,7 @@ public final class MidiPascalParser
 	private int tokenIndex = 0;
 	private MidiPascalSymbol currentToken = null;
 
+	private FrameDescriptor frames;
 	private Map<String, MidiPascalSymbolNode> symbols;
 
 	public MidiPascalParser(Source source)
@@ -30,6 +33,7 @@ public final class MidiPascalParser
 	public MidiPascalRootNode read(MidiPascalLanguage language)
 			throws IOException, MidiPascalSyntaxException
 	{
+		this.frames = new FrameDescriptor();
 		this.symbols = new HashMap<>();
 
 		this.tokens = this.lexer.readSymbols();
@@ -44,8 +48,7 @@ public final class MidiPascalParser
 		System.out.println("---");
 		*/
 
-		FrameDescriptor frameDescriptor = new FrameDescriptor();
-		return new MidiPascalRootNode(language, frameDescriptor, nodes);
+		return new MidiPascalRootNode(language, this.frames, nodes);
 	}
 
 	private List<MidiPascalStatementNode> startExpression() throws MidiPascalSyntaxException
@@ -157,12 +160,16 @@ public final class MidiPascalParser
 		if (this.currentToken instanceof MidiPascalTextSymbol)
 		{
 			String variableName = this.currentToken.toString();
-			MidiPascalSymbolNode addedSymbol =
-					this.symbols.put(variableName, new MidiPascalSymbolNode(variableName));
-			if (addedSymbol != null)
+			if (this.symbols.containsKey(variableName))
 			{
 				throw new MidiPascalSyntaxException("The variable " + variableName + " is already defined.");
 			}
+
+			MidiPascalSymbolNode addedSymbol = new MidiPascalSymbolNode
+			(
+					this.frames.addFrameSlot(variableName, FrameSlotKind.Int)
+			);
+			this.symbols.put(variableName, addedSymbol);
 			this.moveToNextSymbol();
 
 			if (this.currentToken == MidiPascalSimpleSymbol.COMMA)

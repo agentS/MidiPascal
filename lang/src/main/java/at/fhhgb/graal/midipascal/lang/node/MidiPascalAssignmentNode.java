@@ -1,5 +1,7 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
+import com.oracle.truffle.api.frame.FrameSlot;
+import com.oracle.truffle.api.frame.FrameSlotTypeException;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
@@ -9,8 +11,6 @@ public class MidiPascalAssignmentNode extends MidiPascalExpressionNode
 	private final MidiPascalSymbolNode symbol;
 	private final MidiPascalExpressionNode expression;
 
-	private int result;
-
 	public MidiPascalAssignmentNode(final MidiPascalSymbolNode symbol, final MidiPascalExpressionNode expression)
 	{
 		this.symbol = symbol;
@@ -18,28 +18,34 @@ public class MidiPascalAssignmentNode extends MidiPascalExpressionNode
 	}
 
 	@Override
-	public Object getResult()
+	public Object getResult(VirtualFrame frame)
 	{
-		return this.getIntegerResult();
+		return this.getIntegerResult(frame);
 	}
 
 	@Override
-	public String getStringResult()
+	public String getStringResult(VirtualFrame frame)
 	{
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public int getIntegerResult()
+	public int getIntegerResult(VirtualFrame frame)
 	{
-		return this.result;
+		try
+		{
+			return frame.getInt(this.symbol.getFrameSlot());
+		}
+		catch (FrameSlotTypeException exception)
+		{
+			throw new RuntimeException(exception);
+		}
 	}
 
 	@Override
 	public void execute(VirtualFrame frame)
 	{
 		this.expression.execute(frame);
-		this.symbol.setResult(this.expression.getIntegerResult());
-		this.result = this.expression.getIntegerResult();
+		frame.setInt(this.symbol.getFrameSlot(), this.expression.getIntegerResult(frame));
 	}
 }
