@@ -1,9 +1,11 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
+import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.frame.VirtualFrame;
 
 public class MidiPascalStringConcatenationNode extends MidiPascalBinaryNode
 {
+	@CompilerDirectives.CompilationFinal
 	protected String result;
 
 	public MidiPascalStringConcatenationNode

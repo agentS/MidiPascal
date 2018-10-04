@@ -1,11 +1,13 @@
 package at.fhhgb.graal.midipascal.lang.node;
 
+import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 @NodeInfo(shortName = "arithmetic operation", description = "The abstract node for every arithmetic operation between two integers")
 public abstract class MidiPascalArithmeticNode extends MidiPascalBinaryNode
 {
+	@CompilerDirectives.CompilationFinal
 	protected int result;
 
 	MidiPascalArithmeticNode

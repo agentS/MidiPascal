@@ -2,15 +2,21 @@ package at.fhhgb.graal.midipascal.lang.node;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import com.oracle.truffle.api.profiles.ConditionProfile;
 
 @NodeInfo(shortName = "if", description = "The node implementing a conditional statement")
 public class MidiPascalIfNode extends MidiPascalStatementNode
 {
-	private final MidiPascalExpressionNode condition;
+	@Child
+	private MidiPascalExpressionNode condition;
 
-	private final MidiPascalStatementNode thenNode;
+	@Child
+	private MidiPascalStatementNode thenNode;
 
-	private final MidiPascalStatementNode elseNode;
+	@Child
+	private MidiPascalStatementNode elseNode;
+
+	private final ConditionProfile conditionProfile;
 
 	public MidiPascalIfNode
 	(
@@ -31,13 +37,14 @@ public class MidiPascalIfNode extends MidiPascalStatementNode
 		this.condition = condition;
 		this.thenNode = thenNode;
 		this.elseNode = elseNode;
+
+		this.conditionProfile = ConditionProfile.createCountingProfile();
 	}
 
 	@Override
 	public void execute(VirtualFrame frame)
 	{
-		this.condition.execute(frame);
-		if (this.condition.getIntegerResult(frame) != 0)
+		if (this.conditionProfile.profile(this.evaluateCondition(frame)))
 		{
 			this.thenNode.execute(frame);
 		}
@@ -45,5 +52,11 @@ public class MidiPascalIfNode extends MidiPascalStatementNode
 		{
 			this.elseNode.execute(frame);
 		}
+	}
+
+	private boolean evaluateCondition(VirtualFrame frame)
+	{
+		this.condition.execute(frame);
+		return (this.condition.getIntegerResult(frame) != 0);
 	}
 }
