@@ -40,10 +40,11 @@ BEGIN
 			ELSE BEGIN
 				i := 0;
 			END;
-		END
-		ELSE BEGIN
-			WRITE('the prime numbers are ' + primeA + ' and ' + primeB);
 		END;
+	END;
+	IF i THEN	
+	ELSE BEGIN
+		WRITE('the prime numbers are ' + primeA + ' and ' + primeB);
 	END;
 END.
 

@@ -53,7 +53,7 @@ fi
 #######################################################################
 if [[ "$GRAALVM_VERSION" != "" ]]; then
 	PROGRAM_ARGS=""
-	JAVA_ARGS=""
+	JAVA_ARGS="-XX:CompileCommand=print,*OptimizedCallTarget.callRoot -XX:CompileCommand=exclude,*OptimizedCallTarget.callRoot -Dgraal.TruffleBackgroundCompilation=false -Dgraal.TraceTruffleCompilation=true -Dgraal.TraceTruffleCompilationDetails=true -Dgraal.TraceEscapeAnalysis=true -Dgraal.TraceTruffleInlining=true -Dgraal.TraceTruffleCompilationAST=true -Dgraal.TraceTruffleTransferToInterpreter=true"
 
 	for opt in "$@"
 	do

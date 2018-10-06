@@ -3,10 +3,10 @@ PROGRAM conditional;
 VAR c: INTEGER;
 BEGIN
 	c := 1;
-	IF c THEN BEGIN
-		WRITE(42);
-	END
-	ELSE
-		WRITE(1180);
+	WHILE c DO BEGIN
+		IF c THEN BEGIN
+		END
+		ELSE
+	END;
 END.
 
