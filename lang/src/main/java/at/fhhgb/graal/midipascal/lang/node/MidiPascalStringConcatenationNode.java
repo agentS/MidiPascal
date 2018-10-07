@@ -6,7 +6,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 public class MidiPascalStringConcatenationNode extends MidiPascalBinaryNode
 {
 	@CompilerDirectives.CompilationFinal
-	protected String result;
+	private String result;
 
 	public MidiPascalStringConcatenationNode
 	(

@@ -16,7 +16,7 @@ public class MidiPascalDivisionNode extends MidiPascalArithmeticNode
 	}
 
 	@Override
-	void performCalculation(VirtualFrame frame)
+	protected void performCalculation(VirtualFrame frame)
 	{
 		this.result = (this.leftHandSide.getIntegerResult(frame) / this.rightHandSide.getIntegerResult(frame));
 	}
