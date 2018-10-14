@@ -1,0 +1,61 @@
+@startuml
+Node <|-- RootNode
+interface RepeatingNode
+RootNode <|-- MidiPascalRootNode
+abstract class MidiPascalStatementNode {
+	{abstract} + void execute(VirtualFrame frame)
+}
+Node <|-- MidiPascalStatementNode
+abstract class MidiPascalExpressionNode
+MidiPascalStatementNode <|-- MidiPascalExpressionNode
+
+MidiPascalStatementNode <|-- MidiPascalBlockNode
+MidiPascalBlockNode "1" o-- "*" MidiPascalStatementNode
+
+MidiPascalStatementNode <|-- MidiPascalIfNode
+MidiPascalIfNode "1" o-- "1" MidiPascalExpressionNode
+MidiPascalIfNode "1" o-- "1..2" MidipascalStatementNode
+
+MidiPascalStatementNode <|-- MidiPascalWhileNode
+MidiPascalWhileNode "1" *-- "1" WhileRepeatingNode
+WhileRepeatingNode <|-- Node
+WhileRepeatingNode <|- RepeatingNode
+WhileRepeatingNode "1" o-- "1" MidiPascalExpressionNode
+WhileRepeatingNode "1" o-- "1" MidiPascalStatementNode
+
+abstract class MidiPascalUnaryStatement
+MidiPascalStatementNode <|-- MidiPascalUnaryStatement
+MidiPascalUnaryStatement "1" o-- "1" MidiPascalExpressionNode
+MidiPascalUnaryStatement <|-- MidiPascalWriteNode
+
+MidiPascalExpressionNode <|-- MidiPascalIntegerNode
+MidiPascalExpressionNode <|-- MidiPascalStringNode
+
+MidiPascalExpressionNode <|-- MidiPascalSymbolNode
+MidiPascalExpressionNode <|-- MidiPascalAssignmentNode
+MidiPascalAssignmentNode "1" o-- "1" MidiPascalSymbolNode
+MidiPascalAssignmentNode "1" o-- "1" MidiPascalExpressionNode
+
+abstract class MidiPascalBinaryNode
+MidiPascalExpressionNode <|-- MidiPascalBinaryNode
+MidiPascalBinaryNode "1" o-- "2" MidiPascalExpressionNode
+abstract class MidiPascalArithmeticNode {
+	# int result;
+	{abstract} # void performCalculation(VirtualFrame frame)
+}
+MidiPascalBinaryNode <|-- MidiPascalArithmeticNode
+MidiPascalArithmeticNode <|-- MidiPascalAdditionNode
+MidiPascalArithmeticNode <|-- MidiPascalSubtractionNode
+MidiPascalArithmeticNode <|-- MidiPascalMultiplicationNode
+MidiPascalArithmeticNode <|-- MidiPascalDivisonNode
+MidiPascalBinaryNode <|-- MidiPascalStringConcatenationNode
+
+MidiPascalStatementNode <|-- MidiPascalReadNode
+MidiPascalReadNode "1" o-- "1" MidiPascalSymbolNode
+
+MidiPascalStatementNode <|-- MidiPascalPolyglotNode
+MidiPascalPolyglotNode "1" o-- "1" MidiPascalExpressionNode
+
+MidiPascalStatementNode <|-- MidiPascalEmptyStatementNode
+
+@enduml

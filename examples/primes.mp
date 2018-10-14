@@ -42,6 +42,7 @@ BEGIN
 			END;
 		END;
 	END;
+	
 	IF i THEN	
 	ELSE BEGIN
 		WRITE('the prime numbers are ' + primeA + ' and ' + primeB);
